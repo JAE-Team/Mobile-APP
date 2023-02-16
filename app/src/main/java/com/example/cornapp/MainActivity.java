@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setupNavController();
-
     }
 
     private void setupNavController(){
