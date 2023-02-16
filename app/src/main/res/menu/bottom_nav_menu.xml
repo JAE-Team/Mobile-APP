@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/historialFragment"
+        android:icon="@drawable/baseline_history_24"
+        android:title="Historial" />
+
+    <item
+        android:id="@+id/paymentFragment"
+        android:icon="@drawable/baseline_payments_24"
+        android:title="Payment" />
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Profile" />
+
+    <item
+        android:id="@+id/scanFragment"
+        android:icon="@drawable/baseline_qr_code_scanner_24"
+        android:title="Scan" />
+
+</menu>
