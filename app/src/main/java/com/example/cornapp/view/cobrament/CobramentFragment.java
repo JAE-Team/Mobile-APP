@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cornapp.R;
 import com.example.cornapp.databinding.CobramentFragmentBinding;
+import com.example.cornapp.utils.Utils;
 import com.example.cornapp.utils.UtilsHTTP;
+import com.example.cornapp.view.perfil.PerfilFragment;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -30,22 +32,24 @@ public class CobramentFragment extends Fragment {
 
         binding.setupCobro.setOnClickListener(v -> {
             if(binding.cantidadCobro.getText().toString().isEmpty()){
+                Utils.toast(getActivity(),"El campo de cantidad no puede estar vacía");
+            } else {
+                try {
+                    JSONObject obj = new JSONObject("{}");
+                    obj.put("user_id", "623045380");
+                    obj.put("amount",binding.cantidadCobro.getText().toString());
+                    UtilsHTTP.sendPOST("http://10.0.2.2:3001/api/setup_payment", obj.toString(), (response) -> {
+                        try {
+                            setupPayment(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
-            }
-            try {
-                JSONObject obj = new JSONObject("{}");
-                obj.put("tokenRequest","RQST");
-                obj.put("quantityTransaction",binding.cantidadCobro.getText());
-                UtilsHTTP.sendPOST("http://10.0.2.2:3000/setup_payment", obj.toString(), (response) -> {
-                    try {
-                        setupPayment(response);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
         });
 
         return binding.getRoot();
@@ -55,9 +59,10 @@ public class CobramentFragment extends Fragment {
         JSONObject objResponse = new JSONObject(response);
 
         if (objResponse.getString("status").equals("OK")) {
-            JSONObject objToken = objResponse.getJSONObject("result");
-            String token = objToken.getString("token");
+            String token = objResponse.getString("transaction_token");
+
             generateQR(token);
+            Utils.toast(getActivity(), objResponse.getString("message"));
             Log.d("TOKEN",token);
         }
     }
@@ -77,6 +82,7 @@ public class CobramentFragment extends Fragment {
                     }
                 }
                 binding.qrImage.setImageBitmap(bitmap);
+                binding.textBefore.setVisibility(View.GONE);
             } catch (WriterException e) {
                 e.printStackTrace();
             }

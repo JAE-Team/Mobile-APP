@@ -23,7 +23,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="58dp"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,9 +36,9 @@
 
             <EditText
                 android:id="@+id/profile_user_input"
-                style="@android:style/Widget.Holo.AutoCompleteTextView"
+                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
                 android:layout_width="240dp"
-                android:layout_height="59dp"
+                android:layout_height="49dp"
                 android:layout_marginStart="16dp"
                 android:hint="John"
                 android:inputType="text"
@@ -71,7 +71,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="20dp"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,14 +84,30 @@
 
             <EditText
                 android:id="@+id/profile_surname_input"
-                android:layout_width="239dp"
-                android:layout_height="59dp"
+                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
+                android:layout_width="236dp"
+                android:layout_height="49dp"
                 android:layout_marginStart="66dp"
                 android:hint="Doe"
                 android:inputType="text"
+                android:textAlignment="viewStart"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/id_card2"
+                android:layout_width="27dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="17dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/profile_surname_input"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/id_card" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -103,7 +119,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="20dp"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,14 +132,15 @@
 
             <EditText
                 android:id="@+id/profile_phone_input"
+                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
                 android:layout_width="240dp"
-                android:layout_height="59dp"
+                android:layout_height="49dp"
                 android:layout_marginStart="16dp"
-                android:hint="+34 623 000 000"
+                android:hint="623 000 000"
                 android:inputType="phone"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/phone_icon"
-                tools:layout_editor_absoluteY="0dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/phone_icon"
@@ -150,7 +167,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="20dp"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -163,9 +180,9 @@
 
             <EditText
                 android:id="@+id/profile_email_input"
-                style="@android:style/Widget.Holo.AutoCompleteTextView"
+                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
                 android:layout_width="240dp"
-                android:layout_height="59dp"
+                android:layout_height="49dp"
                 android:layout_marginStart="16dp"
                 android:hint="johndoe@gmail.com"
                 android:inputType="textEmailSubject"
@@ -193,7 +210,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/sync"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="156dp"
