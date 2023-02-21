@@ -21,20 +21,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setupNavController();
     }
 
     private void setupNavController(){
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.homeFragment,
+                R.id.iniciFragment,
                 R.id.historialFragment,
-                R.id.paymentFragment,
-                R.id.profileFragment,
-                R.id.scanFragment
+                R.id.cobramentFragment,
+                R.id.perfilFragment,
+                R.id.EscanerFragment
         ).build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavController navController = Navigation.findNavController(this, R.id.fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }

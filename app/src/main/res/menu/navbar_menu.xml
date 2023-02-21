@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/historialFragment"
+        android:icon="@drawable/history"
+        android:title="Historial" />
+
+    <item
+        android:id="@+id/cobramentFragment"
+        android:icon="@drawable/payment"
+        android:title="Cobrament" />
+
+    <item
+        android:id="@+id/iniciFragment"
+        android:icon="@drawable/home"
+        android:title="Inici" />
+    <item
+        android:id="@+id/perfilFragment"
+        android:icon="@drawable/profile"
+        android:title="Perfil" />
+
+    <item
+        android:id="@+id/EscanerFragment"
+        android:icon="@drawable/qr_scanner"
+        android:title="Escaner QR" />
+
+</menu>

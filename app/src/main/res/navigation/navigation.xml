@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/iniciFragment">
+
+    <fragment
+        android:id="@+id/iniciFragment"
+        android:name="com.example.cornapp.view.inici.IniciFragment"
+        android:label="Inici"
+        tools:layout="@layout/inici_fragment">
+
+        <action
+            android:id="@+id/action_homeFragment_to_paymentFragment"
+            app:destination="@id/cobramentFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_scanFragment"
+            app:destination="@id/EscanerFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_historialFragment"
+            app:destination="@id/historialFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/perfilFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/cobramentFragment"
+        android:name="com.example.cornapp.view.cobrament.CobramentFragment"
+        android:label="Cobrament" />
+    <fragment
+        android:id="@+id/EscanerFragment"
+        android:name="com.example.cornapp.view.escaner.EscanerFragment"
+        android:label="Escaner QR" />
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.cornapp.view.perfil.PerfilFragment"
+        android:label="Perfil de usuari"
+        tools:layout="@layout/escaner_fragment" />
+    <fragment
+        android:id="@+id/historialFragment"
+        android:name="com.example.cornapp.view.historial.HistorialFragment"
+        android:label="Historial de transaccions"
+        tools:layout="@layout/cobrament_fragment" />
+
+</navigation>
