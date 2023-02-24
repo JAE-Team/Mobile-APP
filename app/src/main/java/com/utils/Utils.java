@@ -1,6 +1,8 @@
-package com.example.cornapp.utils;
+package com.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 public class Utils {

@@ -1,27 +1,20 @@
-package com.example.cornapp.view.perfil;
+package com.view.perfil;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Selection;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.cornapp.databinding.PerfilFragmentBinding;
-import com.example.cornapp.utils.Utils;
-import com.example.cornapp.utils.UtilsHTTP;
+import com.cornApp.databinding.PerfilFragmentBinding;
+import com.utils.Utils;
+import com.utils.UtilsHTTP;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class PerfilFragment extends Fragment {
     private PerfilFragmentBinding binding;
@@ -42,11 +35,18 @@ public class PerfilFragment extends Fragment {
                 Utils.toast(getActivity(),"Todos los campos son obligatorios");
             } else {
                 try {
+                    clear();
                     JSONObject obj = new JSONObject("{}");
                     obj.put("name",name);
                     obj.put("surname",surname);
                     obj.put("phone",phone);
                     obj.put("email",email);
+                    obj.put("balance",100);
+
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("Users", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("userId", phone);
+                    editor.commit();
 
                     UtilsHTTP.sendPOST("http://10.0.2.2:3001/api/signup", obj.toString(), (response) -> {
                         try {
@@ -69,7 +69,6 @@ public class PerfilFragment extends Fragment {
 
         if (objResponse.getString("status").equals("OK")) {
             String msg = objResponse.getString("message");
-            Log.d("User",msg);
 
             if(msg.equalsIgnoreCase("User created correctly")){
                 Utils.toast(getActivity(),msg);
@@ -78,5 +77,12 @@ public class PerfilFragment extends Fragment {
             }
 
         }
+    }
+
+    public void clear(){
+        binding.profilePhoneInput.setText("");
+        binding.profileEmailInput.setText("");
+        binding.profileUserInput.setText("");
+        binding.profileSurnameInput.setText("");
     }
 }

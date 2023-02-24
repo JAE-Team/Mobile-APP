@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.cornapp'
+    namespace 'com.cornApp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.cornapp"
+        applicationId "com.cornApp"
         minSdk 24
         targetSdk 33
         versionCode 1

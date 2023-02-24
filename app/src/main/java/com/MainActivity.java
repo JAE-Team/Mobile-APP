@@ -1,8 +1,6 @@
-package com.example.cornapp;
+package com;
 
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -10,7 +8,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.cornapp.databinding.ActivityMainBinding;
+import com.cornApp.R;
+import com.cornApp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,9 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setupNavController();
     }
-
     private void setupNavController(){
-        BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.iniciFragment,
                 R.id.historialFragment,
@@ -33,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.perfilFragment,
                 R.id.EscanerFragment
         ).build();
+
         NavController navController = Navigation.findNavController(this, R.id.fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);

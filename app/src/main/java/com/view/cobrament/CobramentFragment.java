@@ -1,21 +1,21 @@
-package com.example.cornapp.view.cobrament;
+package com.view.cobrament;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.cornapp.R;
-import com.example.cornapp.databinding.CobramentFragmentBinding;
-import com.example.cornapp.utils.Utils;
-import com.example.cornapp.utils.UtilsHTTP;
-import com.example.cornapp.view.perfil.PerfilFragment;
+import com.cornApp.R;
+import com.cornApp.databinding.CobramentFragmentBinding;
+import com.utils.Utils;
+import com.utils.UtilsHTTP;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -26,7 +26,6 @@ import org.json.JSONObject;
 
 public class CobramentFragment extends Fragment {
     private CobramentFragmentBinding binding;
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = CobramentFragmentBinding.inflate(inflater, container, false);
 
@@ -36,8 +35,8 @@ public class CobramentFragment extends Fragment {
             } else {
                 try {
                     JSONObject obj = new JSONObject("{}");
-                    obj.put("user_id", "623045380");
                     obj.put("amount",binding.cantidadCobro.getText().toString());
+
                     UtilsHTTP.sendPOST("http://10.0.2.2:3001/api/setup_payment", obj.toString(), (response) -> {
                         try {
                             setupPayment(response);
@@ -49,9 +48,7 @@ public class CobramentFragment extends Fragment {
                     throw new RuntimeException(e);
                 }
             }
-
         });
-
         return binding.getRoot();
     }
 
@@ -63,7 +60,6 @@ public class CobramentFragment extends Fragment {
 
             generateQR(token);
             Utils.toast(getActivity(), objResponse.getString("message"));
-            Log.d("TOKEN",token);
         }
     }
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/iniciFragment"
-        android:name="com.example.cornapp.view.inici.IniciFragment"
+        android:name="com.view.inici.IniciFragment"
         android:label="Inici"
         tools:layout="@layout/inici_fragment">
 
@@ -31,20 +31,20 @@
 
     <fragment
         android:id="@+id/cobramentFragment"
-        android:name="com.example.cornapp.view.cobrament.CobramentFragment"
+        android:name="com.view.cobrament.CobramentFragment"
         android:label="Cobrament" />
     <fragment
         android:id="@+id/EscanerFragment"
-        android:name="com.example.cornapp.view.escaner.EscanerFragment"
+        android:name="com.view.escaner.EscanerFragment"
         android:label="Escaner QR" />
     <fragment
         android:id="@+id/perfilFragment"
-        android:name="com.example.cornapp.view.perfil.PerfilFragment"
+        android:name="com.view.perfil.PerfilFragment"
         android:label="Perfil de usuari"
         tools:layout="@layout/escaner_fragment" />
     <fragment
         android:id="@+id/historialFragment"
-        android:name="com.example.cornapp.view.historial.HistorialFragment"
+        android:name="com.view.historial.HistorialFragment"
         android:label="Historial de transaccions"
         tools:layout="@layout/cobrament_fragment" />
 

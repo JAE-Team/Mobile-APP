@@ -1,21 +1,13 @@
-package com.example.cornapp.view.escaner;
+package com.view.escaner;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.Manifest;
-import android.content.Intent;
+import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -23,11 +15,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.budiyev.android.codescanner.CodeScannerView;
-import com.example.cornapp.R;
-import com.example.cornapp.databinding.EscanerFragmentBinding;
+import com.cornApp.databinding.EscanerFragmentBinding;
 import com.budiyev.android.codescanner.CodeScanner;
-import com.example.cornapp.utils.Utils;
-import com.example.cornapp.utils.UtilsHTTP;
+import com.utils.Utils;
+import com.utils.UtilsHTTP;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,8 +27,11 @@ public class EscanerFragment extends Fragment {
     private EscanerFragmentBinding binding;
     private CodeScanner mCodeScanner;
 
+    private String token;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = EscanerFragmentBinding.inflate(inflater, container, false);
+
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.CAMERA }, 1888);
@@ -46,11 +40,12 @@ public class EscanerFragment extends Fragment {
         CodeScannerView scannerView = binding.scannerView;
         mCodeScanner = new CodeScanner(getActivity(), scannerView);
         mCodeScanner.setDecodeCallback(result -> {
-            Utils.toast(getActivity(),result.getText());
             try {
+                setToken(result.getText());
                 JSONObject obj = new JSONObject("{}");
                 obj.put("user_id", "623045380");
-                obj.put("transaction_token",result.getText());
+                obj.put("transaction_token",getToken());
+
                 UtilsHTTP.sendPOST("http://10.0.2.2:3001/api/start_payment", obj.toString(), (response) -> {
                     try {
                         startPayment(response);
@@ -70,33 +65,54 @@ public class EscanerFragment extends Fragment {
         JSONObject objResponse = new JSONObject(response);
 
         if (objResponse.getString("status").equals("OK")) {
-            TextView amount = getActivity().findViewById(R.id.cantidad);
-            amount.setText(objResponse.getString("amount"));
-            onButtonShowPopupWindowClick(getView());
+            String amount = objResponse.getString("amount");
+            popup(amount);
+        }
+    }
+    public void popup(String amount) {
+        getActivity().runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Cobrament");
+            builder.setMessage("Cantidad a pagar: " +  amount + " CORN");
+
+            builder.setPositiveButton("Aceptar", (dialog, which) -> {
+                finishPayment(true, Integer.parseInt(amount));
+            });
+            builder.setNegativeButton("Rebutjar", (dialog, which) -> {
+                finishPayment(false, Integer.parseInt(amount));
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
+    }
+
+    public void finishPayment(boolean accepted, int amount){
+        try {
+            JSONObject obj = new JSONObject("{}");
+            obj.put("user_id", "623045380");
+            obj.put("transaction_token", getToken());
+            obj.put("accept", accepted);
+            obj.put("amount", amount);
+
+            UtilsHTTP.sendPOST("http://10.0.2.2:3001/api/finish_payment", obj.toString(), (response) -> {
+                try {
+                    Utils.toast(getActivity(), new JSONObject(response).getString("message"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void onButtonShowPopupWindowClick(View view) {
+    public void setToken(String token){
+        this.token = token;
+    }
 
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_payment, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener((v, event) -> {
-            popupWindow.dismiss();
-            return true;
-        });
+    public String getToken(){
+        return token;
     }
 
     @Override

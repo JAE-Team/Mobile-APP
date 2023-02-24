@@ -1,4 +1,4 @@
-package com.example.cornapp.view.inici;
+package com.view.historial;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.cornapp.databinding.IniciFragmentBinding;
+import com.cornApp.databinding.HistorialFragmentBinding;
 
-public class IniciFragment extends Fragment {
+public class HistorialFragment extends Fragment {
 
-    private IniciFragmentBinding binding;
+    private HistorialFragmentBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = IniciFragmentBinding.inflate(inflater, container, false);
+        binding = HistorialFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
