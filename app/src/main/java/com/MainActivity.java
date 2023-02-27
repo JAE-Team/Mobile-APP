@@ -2,6 +2,7 @@ package com;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setupNavController();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
     private void setupNavController(){
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
