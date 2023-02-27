@@ -86,13 +86,13 @@ public class EscanerFragment extends Fragment {
     public void popup(Double amount) {
         getActivity().runOnUiThread(() -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Cobrament");
-            builder.setMessage("Cantidad a pagar: " +  amount + " CORN");
+            builder.setTitle("Payment");
+            builder.setMessage("Amount to be paid: " +  amount + " CORN");
 
-            builder.setPositiveButton("Aceptar", (dialog, which) -> {
+            builder.setPositiveButton("Accept", (dialog, which) -> {
                 finishPayment(true, amount);
             });
-            builder.setNegativeButton("Rebutjar", (dialog, which) -> {
+            builder.setNegativeButton("Decline", (dialog, which) -> {
                 finishPayment(false, amount);
             });
 
