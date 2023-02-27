@@ -19,10 +19,13 @@ import org.json.JSONObject;
 public class PerfilFragment extends Fragment {
     private PerfilFragmentBinding binding;
 
+    public static Usuari user = new Usuari();
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = PerfilFragmentBinding.inflate(inflater, container, false);
 
         binding.sync.setOnClickListener(v -> {
+            fillInputs();
             String name = binding.profileUserInput.getText().toString();
             String surname = binding.profileSurnameInput.getText().toString();
             String phone = binding.profilePhoneInput.getText().toString();
@@ -43,12 +46,9 @@ public class PerfilFragment extends Fragment {
                     obj.put("email",email);
                     obj.put("balance",100);
 
-                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("Users", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("userId", phone);
-                    editor.commit();
+                    user.setUserId(phone);
 
-                    UtilsHTTP.sendPOST("http://10.0.2.2:3001/api/signup", obj.toString(), (response) -> {
+                    UtilsHTTP.sendPOST(Utils.apiUrl + "/api/signup", obj.toString(), (response) -> {
                         try {
                             checkUser(response);
                         } catch (JSONException e) {
@@ -65,6 +65,7 @@ public class PerfilFragment extends Fragment {
     }
 
     public void checkUser(String response) throws JSONException {
+
         JSONObject objResponse = new JSONObject(response);
 
         if (objResponse.getString("status").equals("OK")) {
@@ -72,11 +73,18 @@ public class PerfilFragment extends Fragment {
 
             if(msg.equalsIgnoreCase("User created correctly")){
                 Utils.toast(getActivity(),msg);
-            } else if(msg.equalsIgnoreCase("User already exists, new user can't be created")){
+            } else if(msg.equals("User already exists")){
                 Utils.toast(getActivity(),msg);
             }
 
         }
+    }
+
+    public void fillInputs(){
+        binding.profilePhoneInput.setText("623045381");
+        binding.profileEmailInput.setText("jasdasd@gmail.com");
+        binding.profileUserInput.setText("Ismael");
+        binding.profileSurnameInput.setText("Morillo");
     }
 
     public void clear(){

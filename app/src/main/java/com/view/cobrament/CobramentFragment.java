@@ -1,9 +1,10 @@
 package com.view.cobrament;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import static com.view.perfil.PerfilFragment.user;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.MainActivity;
 import com.cornApp.R;
 import com.cornApp.databinding.CobramentFragmentBinding;
 import com.utils.Utils;
@@ -31,13 +33,14 @@ public class CobramentFragment extends Fragment {
 
         binding.setupCobro.setOnClickListener(v -> {
             if(binding.cantidadCobro.getText().toString().isEmpty()){
-                Utils.toast(getActivity(),"El campo de cantidad no puede estar vacía");
+                Utils.toast(getActivity(),"El campo de cantidad no puede estar vacío");
             } else {
                 try {
                     JSONObject obj = new JSONObject("{}");
                     obj.put("amount",binding.cantidadCobro.getText().toString());
+                    obj.put("user_id",user.getUserId());
 
-                    UtilsHTTP.sendPOST("http://10.0.2.2:3001/api/setup_payment", obj.toString(), (response) -> {
+                    UtilsHTTP.sendPOST(Utils.apiUrl + "/api/setup_payment", obj.toString(), (response) -> {
                         try {
                             setupPayment(response);
                         } catch (JSONException e) {
