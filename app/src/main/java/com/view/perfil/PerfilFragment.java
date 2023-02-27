@@ -25,7 +25,6 @@ public class PerfilFragment extends Fragment {
         binding = PerfilFragmentBinding.inflate(inflater, container, false);
 
         binding.sync.setOnClickListener(v -> {
-            fillInputs();
             String name = binding.profileUserInput.getText().toString();
             String surname = binding.profileSurnameInput.getText().toString();
             String phone = binding.profilePhoneInput.getText().toString();
@@ -78,13 +77,6 @@ public class PerfilFragment extends Fragment {
             }
 
         }
-    }
-
-    public void fillInputs(){
-        binding.profilePhoneInput.setText("623045381");
-        binding.profileEmailInput.setText("jasdasd@gmail.com");
-        binding.profileUserInput.setText("Ismael");
-        binding.profileSurnameInput.setText("Morillo");
     }
 
     public void clear(){

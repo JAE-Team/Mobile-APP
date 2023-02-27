@@ -60,7 +60,6 @@ public class CobramentFragment extends Fragment {
 
         if (objResponse.getString("status").equals("OK")) {
             String token = objResponse.getString("transaction_token");
-
             generateQR(token);
             Utils.toast(getActivity(), objResponse.getString("message"));
         }
