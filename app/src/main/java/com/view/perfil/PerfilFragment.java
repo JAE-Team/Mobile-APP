@@ -34,7 +34,7 @@ public class PerfilFragment extends Fragment {
                     surname.isEmpty() ||
                     phone.isEmpty() ||
                     email.isEmpty()){
-                Utils.toast(getActivity(),"Todos los campos son obligatorios");
+                Utils.toast(getActivity(),"All the fields are obligatory!!");
             } else {
                 try {
                     clear();

@@ -104,7 +104,7 @@ public class EscanerFragment extends Fragment {
     public void popupMessage(String message) {
         getActivity().runOnUiThread(() -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Transacció");
+            builder.setTitle("Transaction");
             builder.setMessage(message + "!!");
 
             AlertDialog dialog = builder.create();

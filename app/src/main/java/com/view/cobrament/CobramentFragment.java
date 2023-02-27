@@ -2,8 +2,10 @@ package com.view.cobrament;
 
 import static com.view.perfil.PerfilFragment.user;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +35,9 @@ public class CobramentFragment extends Fragment {
 
         binding.setupCobro.setOnClickListener(v -> {
             if(binding.cantidadCobro.getText().toString().isEmpty()){
-                Utils.toast(getActivity(),"El campo de cantidad no puede estar vacío");
+                popupMessage("Transaction","The quantity field cannot be empty");
+            } else if(user.getUserId() == null){
+                popupMessage("Log In","You need to be logged in to start a transaction");
             } else {
                 try {
                     JSONObject obj = new JSONObject("{}");
@@ -61,8 +65,31 @@ public class CobramentFragment extends Fragment {
         if (objResponse.getString("status").equals("OK")) {
             String token = objResponse.getString("transaction_token");
             generateQR(token);
-            Utils.toast(getActivity(), objResponse.getString("message"));
+            popupMessage("Transaction",objResponse.getString("message"));
         }
+    }
+
+    public void popupMessage(String title, String message) {
+        getActivity().runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(title);
+            builder.setMessage(message + "!!");
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            // Hide after some seconds
+            final Handler handler  = new Handler();
+            final Runnable runnable = () -> {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            };
+
+            dialog.setOnDismissListener(dialog1 -> handler.removeCallbacks(runnable));
+
+            handler.postDelayed(runnable, 3000);
+        });
     }
 
     private void generateQR(String content) {

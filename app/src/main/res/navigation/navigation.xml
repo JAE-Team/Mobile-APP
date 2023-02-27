@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/iniciFragment"
         android:name="com.view.inici.IniciFragment"
-        android:label="Inici"
+        android:label="Home"
         tools:layout="@layout/inici_fragment">
 
         <action
@@ -32,20 +32,20 @@
     <fragment
         android:id="@+id/cobramentFragment"
         android:name="com.view.cobrament.CobramentFragment"
-        android:label="Cobrament" />
+        android:label="Payment" />
     <fragment
         android:id="@+id/EscanerFragment"
         android:name="com.view.escaner.EscanerFragment"
-        android:label="Escaner QR" />
+        android:label="QR Scanner" />
     <fragment
         android:id="@+id/perfilFragment"
         android:name="com.view.perfil.PerfilFragment"
-        android:label="Perfil de usuari"
+        android:label="User Profile"
         tools:layout="@layout/escaner_fragment" />
     <fragment
         android:id="@+id/historialFragment"
         android:name="com.view.historial.HistorialFragment"
-        android:label="Historial de transaccions"
+        android:label="Transaction history"
         tools:layout="@layout/cobrament_fragment" />
 
 </navigation>
