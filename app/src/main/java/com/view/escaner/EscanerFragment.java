@@ -30,8 +30,6 @@ import com.utils.UtilsHTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 public class EscanerFragment extends Fragment {
     private EscanerFragmentBinding binding;
     private CodeScanner mCodeScanner;
@@ -52,18 +50,20 @@ public class EscanerFragment extends Fragment {
         mCodeScanner.setDecodeCallback(result -> {
             try {
                 onPause();
-                setToken(result.getText());
-                JSONObject obj = new JSONObject("{}");
-                obj.put("user_id", "623045381");
-                obj.put("transaction_token",getToken());
+                if(result.getText().contains("P")){
+                    setToken(result.getText());
+                    JSONObject obj = new JSONObject("{}");
+                    obj.put("user_id", "623045381");
+                    obj.put("transaction_token",getToken());
 
-                UtilsHTTP.sendPOST(Utils.apiUrl + "/api/start_payment", obj.toString(), (response) -> {
-                    try {
-                        startPayment(response);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                    UtilsHTTP.sendPOST(Utils.apiUrl + "/api/start_payment", obj.toString(), (response) -> {
+                        try {
+                            startPayment(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -78,6 +78,9 @@ public class EscanerFragment extends Fragment {
         if (objResponse.getString("status").equals("OK")) {
             Double amount = objResponse.getDouble("amount");
             popup(amount);
+        } else if (objResponse.getString("status").equals("Error")){
+            popupMessage(objResponse.getString("message"));
+            onResume();
         }
     }
     public void popup(Double amount) {
