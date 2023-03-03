@@ -1,17 +1,17 @@
 package com.cornApp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.cornApp.databinding.PerfilFragmentBinding;
 import com.cornApp.utils.Utils;
 import com.cornApp.utils.UtilsHTTP;
 
@@ -22,14 +22,23 @@ public class LoginActivity extends AppCompatActivity {
 
     public Button login;
     public EditText email, pwd;
+    public TextView createAccount;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        login = findViewById(R.id.log_in);
+        login = findViewById(R.id.register);
+        email = findViewById(R.id.profile_email_input);
+        pwd = findViewById(R.id.input_pwd);
+        createAccount = (TextView) findViewById(R.id.createAccount);
 
         login.setOnClickListener(v -> {
             login();
+        });
+
+        createAccount.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -60,7 +69,16 @@ public class LoginActivity extends AppCompatActivity {
 
         if (objResponse.getString("status").equals("OK")) {
             popupMessage(objResponse.getString("message"));
-            MainActivity.setSessionToken(objResponse.getString("token"));
+            popupMessage(objResponse.getString("token"));
+
+            // Create session token
+            SharedPreferences sharedPref = getSharedPreferences("sessionToken",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("sessionToken", objResponse.getString("token"));
+            editor.commit();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         } else if (objResponse.getString("status").equals("Error")){
             popupMessage(objResponse.getString("message"));
         }

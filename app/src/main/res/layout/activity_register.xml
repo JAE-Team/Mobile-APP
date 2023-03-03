@@ -13,14 +13,16 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="41dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
+        app:layout_constraintBottom_toTopOf="@+id/profile_user_surname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="210dp">
+        app:layout_constraintTop_toBottomOf="@+id/title_login"
+        tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -34,7 +36,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/alata"
                 android:hint="John"
-                android:inputType="textEmailSubject"
+                android:inputType="text"
                 android:maxLength="320"
                 android:paddingTop="20dp"
                 android:textSize="16sp"
@@ -65,8 +67,10 @@
         android:layout_width="195dp"
         android:layout_height="129dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="38dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/title_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,17 +83,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="173dp"
         android:layout_marginEnd="180dp"
-        android:layout_marginBottom="224dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/alata"
         android:text="Registre d'usuari"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/profile_email"
+        app:layout_constraintBottom_toTopOf="@+id/profile_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_img" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_user_surname"
@@ -97,14 +102,16 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="41dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
+        app:layout_constraintBottom_toTopOf="@+id/profile_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="281dp">
+        app:layout_constraintTop_toBottomOf="@+id/profile_user"
+        tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -118,7 +125,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/alata"
                 android:hint="Doe"
-                android:inputType="textEmailSubject"
+                android:inputType="text"
                 android:maxLength="320"
                 android:paddingTop="20dp"
                 android:textSize="16sp"
@@ -153,10 +160,11 @@
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
-        app:layout_constraintBottom_toTopOf="@+id/profile_email"
+        app:layout_constraintBottom_toTopOf="@+id/login_pwd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_user_surname"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -171,7 +179,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/alata"
                 android:hint="623 045 380"
-                android:inputType="textEmailSubject"
+                android:inputType="phone"
                 android:maxLength="320"
                 android:paddingTop="20dp"
                 android:textSize="16sp"
@@ -207,10 +215,11 @@
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
-        app:layout_constraintBottom_toTopOf="@+id/login_repwd"
+        app:layout_constraintBottom_toTopOf="@+id/profile_phone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_user_surname"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -225,7 +234,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/alata"
                 android:hint="johndoe@gmail.com"
-                android:inputType="textEmailSubject"
+                android:inputType="textEmailAddress"
                 android:maxLength="320"
                 android:paddingTop="20dp"
                 android:textSize="16sp"
@@ -257,14 +266,16 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="41dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
+        app:layout_constraintBottom_toTopOf="@+id/login_repwd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="566dp">
+        app:layout_constraintTop_toBottomOf="@+id/profile_phone"
+        tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -278,7 +289,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/alata"
                 android:hint="Password"
-                android:inputType="textEmailSubject"
+                android:inputType="textPassword"
                 android:maxLength="320"
                 android:paddingTop="20dp"
                 android:textSize="16sp"
@@ -310,14 +321,14 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="41dp"
-        android:layout_marginBottom="10dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
-        app:layout_constraintBottom_toTopOf="@+id/login_pwd"
+        app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_pwd"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -332,7 +343,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/alata"
                 android:hint="Password"
-                android:inputType="textEmailSubject"
+                android:inputType="textPassword"
                 android:maxLength="320"
                 android:paddingTop="20dp"
                 android:textSize="16sp"
@@ -359,17 +370,34 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/log_in"
+        android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="157dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="166dp"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="40dp"
         android:fontFamily="@font/alata"
         android:text="Registrar-s'he"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.432"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_repwd" />
+
+    <TextView
+        android:id="@+id/haveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/alata"
+        android:text="Si ja tens un compte, inicia sessió aquí"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

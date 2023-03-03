@@ -15,7 +15,6 @@ import com.cornApp.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private static String sessionToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,4 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
-    public static void setSessionToken(String st){
-        sessionToken = st;
-    }
-    public static String getSessionToken() {
-        return sessionToken;
-    }
 }
