@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             popupMessage(objResponse.getString("token"));
 
             // Create session token
-            SharedPreferences sharedPref = getSharedPreferences("sessionToken",Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("sessionToken", objResponse.getString("token"));
             editor.commit();

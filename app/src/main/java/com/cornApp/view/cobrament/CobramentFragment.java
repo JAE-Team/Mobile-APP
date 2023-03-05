@@ -1,8 +1,8 @@
 package com.cornApp.view.cobrament;
 
-import static com.cornApp.view.perfil.PerfilFragment.user;
-
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,19 +28,20 @@ import org.json.JSONObject;
 
 public class CobramentFragment extends Fragment {
     private CobramentFragmentBinding binding;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = CobramentFragmentBinding.inflate(inflater, container, false);
 
         binding.setupCobro.setOnClickListener(v -> {
             if(binding.cantidadCobro.getText().toString().isEmpty()){
                 popupMessage("Transaction","The quantity field cannot be empty");
-            } else if(user.getUserId() == null){
-                popupMessage("Log In","You need to be logged in to start a transaction");
             } else {
                 try {
+                    SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
+
                     JSONObject obj = new JSONObject("{}");
                     obj.put("amount",binding.cantidadCobro.getText().toString());
-                    obj.put("user_id",user.getUserId());
+                    obj.put("user_id",sharedPref.getString("phone", ""));
 
                     UtilsHTTP.sendPOST(Utils.apiUrl + "/api/setup_payment", obj.toString(), (response) -> {
                         try {

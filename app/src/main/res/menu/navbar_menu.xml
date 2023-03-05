@@ -17,7 +17,7 @@
         android:title="Home" />
     <item
         android:id="@+id/perfilFragment"
-        android:icon="@drawable/user"
+        android:icon="@drawable/perfil"
         android:title="Profile" />
 
     <item
