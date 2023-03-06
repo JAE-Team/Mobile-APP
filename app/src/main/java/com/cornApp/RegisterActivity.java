@@ -114,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
         JSONObject objResponse = new JSONObject(response);
 
         if (objResponse.getString("status").equals("OK")) {
-            popupMessage(objResponse.getString("message"));
+            Utils.toast(this,objResponse.getString("message"));
 
             // Create session token
             SharedPreferences sharedPref = getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
