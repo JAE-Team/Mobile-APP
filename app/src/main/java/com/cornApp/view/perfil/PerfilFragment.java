@@ -1,6 +1,7 @@
 package com.cornApp.view.perfil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.cornApp.LoginActivity;
 import com.cornApp.databinding.PerfilFragmentBinding;
 import com.cornApp.utils.Utils;
 import com.cornApp.utils.UtilsHTTP;
@@ -33,8 +35,10 @@ public class PerfilFragment extends Fragment {
                 JSONObject obj = new JSONObject("{}");
 
                 SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionToken",Context.MODE_PRIVATE);
-                String sToken = sharedPref.getString("sessionToken","");
-                obj.put("session_token", sToken);
+                SharedPreferences sharedUser = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
+
+                obj.put("session_token", sharedPref.getString("sessionToken",""));
+                obj.put("userId", sharedUser.getString("phone",""));
 
                 UtilsHTTP.sendPOST(Utils.apiUrl + "/api/logout", obj.toString(), (response) -> {
                     try {
@@ -58,10 +62,8 @@ public class PerfilFragment extends Fragment {
             String msg = objResponse.getString("message");
 
             if(msg.equalsIgnoreCase("Logout correct")){
-                Utils.toast(getActivity(),msg);
-
-            } else if(msg.equals("Logout failed, session token not found")){
-                Utils.toast(getActivity(),msg);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
             }
 
         }

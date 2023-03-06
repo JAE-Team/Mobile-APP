@@ -34,7 +34,7 @@ public class CobramentFragment extends Fragment {
 
         binding.setupCobro.setOnClickListener(v -> {
             if(binding.cantidadCobro.getText().toString().isEmpty()){
-                popupMessage("Transaction","The quantity field cannot be empty");
+                popupMessage("Transacció","El camp no pot estar buit");
             } else {
                 try {
                     SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
@@ -64,7 +64,7 @@ public class CobramentFragment extends Fragment {
         if (objResponse.getString("status").equals("OK")) {
             String token = objResponse.getString("transaction_token");
             generateQR(token);
-            popupMessage("Transaction",objResponse.getString("message"));
+            popupMessage("Transacció", objResponse.getString("message"));
         }
     }
 

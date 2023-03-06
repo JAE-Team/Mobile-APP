@@ -1,11 +1,10 @@
 package com.cornApp.view.escaner;
 
-
-import static com.cornApp.view.perfil.PerfilFragment.user;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,8 +31,6 @@ public class EscanerFragment extends Fragment {
     private EscanerFragmentBinding binding;
     private CodeScanner mCodeScanner;
 
-    private String token;
-
     @SuppressLint("WrongThread")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = EscanerFragmentBinding.inflate(inflater, container, false);
@@ -49,10 +46,18 @@ public class EscanerFragment extends Fragment {
             try {
                 onPause();
                 if(result.getText().contains("P")){
-                    setToken(result.getText());
+                    // Guardar el token de cobrament
+                    SharedPreferences sharedPayments = getActivity().getSharedPreferences("payments",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPayments.edit();
+                    editor.putString("paymentToken", result.getText());
+                    editor.commit();
+
+                    // Obtenir el id del user
+                    SharedPreferences sharedUser = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
+
                     JSONObject obj = new JSONObject("{}");
-                    obj.put("user_id", "623045381");
-                    obj.put("transaction_token",getToken());
+                    obj.put("user_id", sharedUser.getString("phone", ""));
+                    obj.put("transaction_token",sharedPayments.getString("paymentToken",""));
 
                     UtilsHTTP.sendPOST(Utils.apiUrl + "/api/start_payment", obj.toString(), (response) -> {
                         try {
@@ -84,13 +89,13 @@ public class EscanerFragment extends Fragment {
     public void popup(Double amount) {
         getActivity().runOnUiThread(() -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Payment");
-            builder.setMessage("Amount to be paid: " +  amount + " CORN");
+            builder.setTitle("Cobrament");
+            builder.setMessage("Quantitat a pagar: " +  amount + " CORN");
 
-            builder.setPositiveButton("Accept", (dialog, which) -> {
+            builder.setPositiveButton("Acceptar", (dialog, which) -> {
                 finishPayment(true, amount);
             });
-            builder.setNegativeButton("Decline", (dialog, which) -> {
+            builder.setNegativeButton("Rebutjar", (dialog, which) -> {
                 finishPayment(false, amount);
             });
 
@@ -102,7 +107,7 @@ public class EscanerFragment extends Fragment {
     public void popupMessage(String message) {
         getActivity().runOnUiThread(() -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Transaction");
+            builder.setTitle("Transacció");
             builder.setMessage(message + "!!");
 
             AlertDialog dialog = builder.create();
@@ -125,8 +130,11 @@ public class EscanerFragment extends Fragment {
     public void finishPayment(boolean accepted, double amount){
         try {
             JSONObject obj = new JSONObject("{}");
-            obj.put("user_id", user.getUserId());
-            obj.put("transaction_token", getToken());
+            SharedPreferences sharedPayments = getActivity().getSharedPreferences("payments",Context.MODE_PRIVATE);
+            SharedPreferences sharedUser = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
+
+            obj.put("user_id", sharedUser.getString("phone",""));
+            obj.put("transaction_token", sharedPayments.getString("paymentToken",""));
             obj.put("accept", accepted);
             obj.put("amount", amount);
 
@@ -151,14 +159,6 @@ public class EscanerFragment extends Fragment {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void setToken(String token){
-        this.token = token;
-    }
-
-    public String getToken(){
-        return token;
     }
 
     @Override
