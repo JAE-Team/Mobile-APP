@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="profileEditTextColor">#707070</color>
+    <color name="beige">#f4eeed</color>
+    <color name="deep_green">#486279</color>
 </resources>
