@@ -21,9 +21,6 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    private RegisterActivity binding;
-
     public Button registrarse;
     private EditText username, surnames, email, phone, pwd, pwd2;
     public TextView haveAccount;
@@ -60,8 +57,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         } else if(checkIfPasswordIsEqual(pwd.getText().toString(), pwd2.getText().toString())){
             popupMessage("Les contrasenyes no son iguals");
-            pwd.setText("");
-            pwd2.setText("");
+            pwd.setText(""); pwd2.setText("");
+
+        } else if(pwd.getText().toString().length() < 8){
+            popupMessage("La contrasenya ha de contenir 8 caràcters mínim");
+            pwd.setText(""); pwd2.setText("");
+
         } else {
             try {
                 JSONObject obj = new JSONObject("{}");
@@ -76,11 +77,11 @@ public class RegisterActivity extends AppCompatActivity {
                     try {
                         registerUser(response);
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        // throw new RuntimeException(e);
                     }
                 });
             } catch (JSONException e) {
-                throw new RuntimeException(e);
+                // throw new RuntimeException(e);
             }
 
         }
@@ -113,8 +114,6 @@ public class RegisterActivity extends AppCompatActivity {
         JSONObject objResponse = new JSONObject(response);
 
         if (objResponse.getString("status").equals("OK")) {
-            Utils.toast(this,objResponse.getString("message"));
-
             // Create session token
             SharedPreferences sharedPref = getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -123,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        } else if (objResponse.getString("status").equals("Error")){
+        } else if (objResponse.getString("status").equals("KO")){
             popupMessage(objResponse.getString("message"));
         }
     }
