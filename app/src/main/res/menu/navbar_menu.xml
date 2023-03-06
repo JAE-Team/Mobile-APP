@@ -4,25 +4,25 @@
     <item
         android:id="@+id/historialFragment"
         android:icon="@drawable/history"
-        android:title="History" />
+        android:title="Historial" />
 
     <item
         android:id="@+id/cobramentFragment"
         android:icon="@drawable/payment"
-        android:title="Payment" />
+        android:title="Cobrament" />
 
     <item
         android:id="@+id/iniciFragment"
         android:icon="@drawable/home"
-        android:title="Home" />
+        android:title="Inici" />
     <item
         android:id="@+id/perfilFragment"
         android:icon="@drawable/perfil"
-        android:title="Profile" />
+        android:title="Perfil" />
 
     <item
         android:id="@+id/EscanerFragment"
         android:icon="@drawable/qr_scanner"
-        android:title="QR Scanner" />
+        android:title="Escaner QR" />
 
 </menu>

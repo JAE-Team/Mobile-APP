@@ -57,9 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
     private void register(){
         if (username.getText().toString().isEmpty() || surnames.getText().toString().isEmpty() || email.getText().toString().isEmpty() || phone.getText().toString().isEmpty() || pwd.getText().toString().isEmpty() || pwd2.getText().toString().isEmpty()){
             popupMessage("Tots els camps son obligatoris");
-        }
 
-        if(checkIfPasswordIsEqual(pwd.getText().toString(), pwd2.getText().toString())){
+        } else if(checkIfPasswordIsEqual(pwd.getText().toString(), pwd2.getText().toString())){
             popupMessage("Les contrasenyes no son iguals");
             pwd.setText("");
             pwd2.setText("");
