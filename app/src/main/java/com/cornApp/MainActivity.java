@@ -38,9 +38,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONObject obj = new JSONObject("{}");
 
-            SharedPreferences sharedPref = this.getSharedPreferences("sessionToken", Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = this.getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
             String sToken = sharedPref.getString("sessionToken","");
             obj.put("sessionToken", sToken);
+
             Log.d("token",sToken);
 
             UtilsHTTP.sendPOST(Utils.apiUrl + "/api/get_profile", obj.toString(), (response) -> {
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                     } else if (objResponse.getString("status").equals("Error")){
-                        popupMessage((objResponse.getString("message")));
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);
                     }

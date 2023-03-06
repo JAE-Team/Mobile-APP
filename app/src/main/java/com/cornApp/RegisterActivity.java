@@ -115,6 +115,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (objResponse.getString("status").equals("OK")) {
             popupMessage(objResponse.getString("message"));
+
+            // Create session token
+            SharedPreferences sharedPref = getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("sessionToken", objResponse.getString("token"));
+            editor.commit();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         } else if (objResponse.getString("status").equals("Error")){
             popupMessage(objResponse.getString("message"));
         }
