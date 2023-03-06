@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/iniciFragment"
-        android:name="com.view.inici.IniciFragment"
+        android:name="com.cornApp.view.inici.IniciFragment"
         android:label="Home"
         tools:layout="@layout/inici_fragment">
 
@@ -31,21 +31,31 @@
 
     <fragment
         android:id="@+id/cobramentFragment"
-        android:name="com.view.cobrament.CobramentFragment"
+        android:name="com.cornApp.view.cobrament.CobramentFragment"
         android:label="Payment" />
     <fragment
         android:id="@+id/EscanerFragment"
-        android:name="com.view.escaner.EscanerFragment"
+        android:name="com.cornApp.view.escaner.EscanerFragment"
         android:label="QR Scanner" />
     <fragment
         android:id="@+id/perfilFragment"
-        android:name="com.view.perfil.PerfilFragment"
+        android:name="com.cornApp.view.perfil.PerfilFragment"
         android:label="User Profile"
         tools:layout="@layout/escaner_fragment" />
     <fragment
         android:id="@+id/historialFragment"
-        android:name="com.view.historial.HistorialFragment"
+        android:name="com.cornApp.view.historial.HistorialFragment"
         android:label="Transaction history"
         tools:layout="@layout/cobrament_fragment" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.cornApp.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="com.cornApp.RegisterActivity"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register" />
 
 </navigation>

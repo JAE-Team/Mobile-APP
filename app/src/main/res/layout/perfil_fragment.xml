@@ -2,51 +2,29 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutPerfil"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/user_profile"
-        android:layout_width="95dp"
-        android:layout_height="94dp"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="Profile Icon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile"
-        tools:ignore="MissingConstraints" />
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_user_name"
         android:layout_width="334dp"
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="36dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_profile"
+        app:layout_constraintTop_toBottomOf="@+id/logo_user"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/profile_user_input"
-                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
-                android:layout_width="240dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="16dp"
-                android:hint="John"
-                android:inputType="text"
-                android:maxLength="45"
-                android:paddingTop="20dp"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/id_card"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/id_card"
@@ -54,64 +32,36 @@
                 android:layout_height="35dp"
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="17dp"
+                android:tint="#486279"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/profile_user_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.642"
                 app:srcCompat="@drawable/id_card" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profile_user_surname"
-        android:layout_width="334dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_user_name"
-        tools:ignore="MissingConstraints">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/profile_surname_input"
-                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
-                android:layout_width="236dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="66dp"
-                android:hint="Doe"
-                android:inputType="text"
-                android:maxLength="45"
-                android:paddingTop="20dp"
-                android:textAlignment="viewStart"
-                android:textSize="16sp"
+            <TextView
+                android:id="@+id/labelNom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:text="Nom:"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/id_card2"
-                android:layout_width="27dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="22dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="17dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/profile_surname_input"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/id_card" />
+            <TextView
+                android:id="@+id/nom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:text="John"
+                app:layout_constraintStart_toEndOf="@+id/labelNom"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -123,29 +73,40 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="36dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_user_surname"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/profile_phone_input"
-                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
-                android:layout_width="240dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="16dp"
-                android:hint="623 000 000"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:paddingTop="20dp"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/phone_icon"
+            <TextView
+                android:id="@+id/labelTelefon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:text="Teléfon:"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/telefon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:text="623045380"
+                app:layout_constraintStart_toEndOf="@+id/labelTelefon"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -154,10 +115,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="17dp"
+                android:tint="#486279"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/profile_phone_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
@@ -173,30 +133,41 @@
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="36dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_phone"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/profile_email_input"
-                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
-                android:layout_width="240dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="16dp"
-                android:hint="johndoe@gmail.com"
-                android:inputType="textEmailSubject"
-                android:maxLength="320"
-                android:paddingTop="20dp"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/email_icon"
-                tools:layout_editor_absoluteY="0dp" />
+            <TextView
+                android:id="@+id/labelEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:text="Correu:"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:text="juanismael06@gmail.com"
+                app:layout_constraintStart_toEndOf="@+id/labelEmail"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/email_icon"
@@ -204,10 +175,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="17dp"
+                android:tint="#486279"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/profile_email_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
@@ -217,15 +187,89 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/sync"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_user_surname"
+        android:layout_width="334dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="36dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_user_name"
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/labelCognom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:text="Cognoms:"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cognoms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:text="Doe"
+                app:layout_constraintStart_toEndOf="@+id/labelCognom"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/id_card2"
+                android:layout_width="27dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="17dp"
+                android:tint="#486279"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/id_card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/logo_user"
+        android:layout_width="200dp"
+        android:layout_height="201dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="126dp"
+        android:layout_marginBottom="31dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_user_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/user" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="45dp"
-        android:text="Sync"
-        app:icon="@drawable/refresh"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        app:backgroundTint="@color/deep_green"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/log_out" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
