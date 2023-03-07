@@ -1,18 +1,29 @@
 package com.cornApp.view.perfil;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.cornApp.LoginActivity;
 import com.cornApp.R;
@@ -25,13 +36,29 @@ import org.json.JSONObject;
 
 public class PerfilFragment extends Fragment {
     private PerfilFragmentBinding binding;
+    private ActivityResultLauncher<Intent> launcher;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = PerfilFragmentBinding.inflate(inflater, container, false);
 
         getProfileInfo();
 
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Intent data = result.getData();
+                ClipData clipData = data.getClipData();
+                if (clipData != null && clipData.getItemCount() >= 2) {
+                    Uri uri1 = clipData.getItemAt(0).getUri();
+                    Uri uri2 = clipData.getItemAt(1).getUri();
+                    // Procesar las imágenes seleccionadas
+                }
+            }
+        });
 
+        binding.dni.setOnClickListener(v -> {
+            startGallery();
+        });
 
         binding.logout.setOnClickListener(v -> {
             try {
@@ -58,7 +85,6 @@ public class PerfilFragment extends Fragment {
     }
 
     public void logout(String response) throws JSONException {
-
         JSONObject objResponse = new JSONObject(response);
 
         if (objResponse.getString("status").equals("OK")) {
@@ -69,6 +95,15 @@ public class PerfilFragment extends Fragment {
                 startActivity(intent);
             }
         }
+    }
+
+    public void startGallery(){
+        //Create Intent
+        Intent intent = new Intent();
+        intent.setType("image/jpg");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivity(Intent.createChooser(intent,"Escull dos fotos: "));
     }
 
     public void getProfileInfo(){
@@ -113,6 +148,10 @@ public class PerfilFragment extends Fragment {
         binding.telefon.setText(strPhone);
         binding.email.setText(strEmail);
         binding.statusText.setText(strStatus);
+    }
+
+    public void sendDNI(String response){
+
     }
 
     public void popupMessage(String message) {
