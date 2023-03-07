@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
                         sendDataToFragment(userData.getString("userName"),
                                 userData.getString("userSurname"),
                                 userData.getString("userId"),
-                                userData.getString("userEmail"));
+                                userData.getString("userEmail"),
+                                userData.getString("verificationStatus"));
 
                         this.runOnUiThread(() -> {
                             setContentView(binding.getRoot());
@@ -114,13 +115,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void sendDataToFragment(String name, String surname, String phone, String email){
+    public void sendDataToFragment(String name, String surname, String phone, String email, String status){
         SharedPreferences sharedPref = getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("name", name);
         editor.putString("surname", surname);
         editor.putString("phone", phone);
         editor.putString("email", email);
+        editor.putString("status", status);
         editor.commit();
     }
 }
