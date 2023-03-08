@@ -116,6 +116,8 @@ public class PerfilFragment extends Fragment {
 
             JSONObject obj = new JSONObject("{}");
             obj.put("type", "uploadFile");
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
+            obj.put("user_id", sharedPref.getString("phone",""));
             obj.put("anvers", anversBase64);
             obj.put("revers", reversBase64);
 
@@ -123,35 +125,24 @@ public class PerfilFragment extends Fragment {
                 try {
                     JSONObject objResponse = new JSONObject(response);
                     if (objResponse.getString("status").equals("OK")) {
-                        popupMessage("Imatges pujades a la BBDD");
+                        popupMessage(objResponse.getString("message"));
+
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("status", objResponse.getString("statusDNI"));
+                        editor.commit();
+                        changeStatus();
+
+                    } else if(objResponse.getString("status").equals("KO")){
+                        popupMessage(objResponse.getString("message"));
                     }
                 } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    // throw new RuntimeException(e);
                 }
             });
 
         } catch (IOException e) { e.printStackTrace(); } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static File getFileFromUri(Context context, Uri uri) {
-        File file = null;
-        String filePath = null;
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            filePath = cursor.getString(column_index);
-            cursor.close();
-        }
-
-        if (filePath != null) {
-            file = new File(filePath);
-        }
-
-        return file;
     }
 
     public void logout(String response) throws JSONException {
@@ -183,6 +174,29 @@ public class PerfilFragment extends Fragment {
         String strSurname = sharedPref.getString("surname", "");
         String strPhone = sharedPref.getString("phone", "");
         String strEmail = sharedPref.getString("email", "");
+
+        binding.nom.setText(strName);
+        binding.cognoms.setText(strSurname);
+        binding.telefon.setText(strPhone);
+        binding.email.setText(strEmail);
+
+        changeStatus();
+    }
+
+    public void popupMessage(String message) {
+        getActivity().runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Perfil d'usuari");
+            builder.setMessage(message + "!!");
+            builder.setNeutralButton("OK", null);
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+    }
+
+    public void changeStatus(){
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
         String strStatus = sharedPref.getString("status", "");
 
         switch (strStatus){
@@ -213,27 +227,6 @@ public class PerfilFragment extends Fragment {
                 break;
         }
 
-        binding.nom.setText(strName);
-        binding.cognoms.setText(strSurname);
-        binding.telefon.setText(strPhone);
-        binding.email.setText(strEmail);
         binding.statusText.setText(strStatus);
     }
-
-    public void sendDNI(String response){
-
-    }
-
-    public void popupMessage(String message) {
-        getActivity().runOnUiThread(() -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Perfil d'usuari");
-            builder.setMessage(message + "!!");
-            builder.setNeutralButton("OK", null);
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        });
-    }
-
 }
