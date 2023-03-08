@@ -173,4 +173,5 @@ public class EscanerFragment extends Fragment {
         super.onPause();
     }
 
+
 }
