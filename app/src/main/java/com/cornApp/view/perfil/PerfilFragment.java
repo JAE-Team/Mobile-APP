@@ -116,7 +116,7 @@ public class PerfilFragment extends Fragment {
 
             JSONObject obj = new JSONObject("{}");
             obj.put("type", "uploadFile");
-            SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionToken",Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
             obj.put("sessionToken", sharedPref.getString("sessionToken",""));
             obj.put("anvers", anversBase64);
             obj.put("revers", reversBase64);
