@@ -9,10 +9,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/balanceView"
-        android:layout_width="408dp"
-        android:layout_height="221dp"
+        android:layout_width="331dp"
+        android:layout_height="192dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
+        app:cardCornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +22,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp">
 
             <TextView
                 android:id="@+id/userBalance"
@@ -31,41 +33,73 @@
                 android:layout_marginBottom="68dp"
                 android:fontFamily="@font/alataregular"
                 android:text="0 €"
+                android:textColor="@color/black"
                 android:textSize="48sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/saldoTitle" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/saldoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="125dp"
-                android:layout_marginTop="57dp"
-                android:layout_marginEnd="198dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="124dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/alataregular"
                 android:text="Saldo actual:"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/userBalance"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/saldoIcon"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/saldoIcon"
+                android:layout_width="56dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="51dp"
+                android:layout_marginBottom="121dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/saldoTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/money" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/transactionsView"
-        android:layout_width="408dp"
-        android:layout_height="505dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="4dp"
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="9dp"
+        android:fontFamily="@font/alataregular"
+        android:text="TRANSACCIONS"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/transactionList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balanceView" />
+
+    <ListView
+        android:id="@+id/transactionList"
+        style="@style/Widget.AppCompat.Light.ListView.DropDown"
+        android:layout_width="393dp"
+        android:layout_height="400dp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/balanceView"/>
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

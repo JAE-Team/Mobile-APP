@@ -116,8 +116,8 @@ public class PerfilFragment extends Fragment {
 
             JSONObject obj = new JSONObject("{}");
             obj.put("type", "uploadFile");
-            SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
-            obj.put("user_id", sharedPref.getString("phone",""));
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionToken",Context.MODE_PRIVATE);
+            obj.put("sessionToken", sharedPref.getString("sessionToken",""));
             obj.put("anvers", anversBase64);
             obj.put("revers", reversBase64);
 
@@ -159,7 +159,6 @@ public class PerfilFragment extends Fragment {
     }
 
     public void startGallery(){
-        //Create Intent
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
