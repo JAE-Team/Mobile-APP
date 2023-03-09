@@ -207,16 +207,19 @@ public class PerfilFragment extends Fragment {
 
             case "WAITING_VERIFICATION":
                 strStatus = "Esperant verificació...";
+                binding.dni.setEnabled(false);
                 binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_orange,null));
                 break;
 
             case "ACCEPTED":
                 strStatus = "Acceptat";
+                binding.dni.setEnabled(false);
                 binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_green,null));
                 break;
 
             case "REJECTED":
                 strStatus = "Rebutjat";
+                binding.dni.setEnabled(true);
                 binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_red,null));
                 break;
 
