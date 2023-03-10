@@ -1,9 +1,11 @@
 package com.cornApp.view.historial;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,19 +89,18 @@ public class HistorialFragment extends Fragment {
         getActivity().runOnUiThread(() -> {
         try {
             transaccions = new ArrayList<>();
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
 
             JSONObject objResponse = new JSONObject(response);
             Object message = objResponse.get("message");
 
             if (message instanceof String) {
-                Utils.toast(getActivity(), "No se ha podido obtener del servidor la información de las transferencias de ");
+                popupMessage("No se ha podido obtener del servidor la información de las transferencias de " + sharedPref.getString("name",""));
             } else if (message instanceof JSONArray) {
                 JSONArray jsonArray = (JSONArray) message;
                 if(jsonArray.length() ==0){
-                    Utils.toast(getActivity(),"No se han encontrado transferencias asociadas a este usuario en la base de datos");
+                    popupMessage("No se han encontrado transferencias asociadas a este usuario en la base de datos");
                 } else {
-
-
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             transaccions.add(new Transaccio(
@@ -109,8 +110,8 @@ public class HistorialFragment extends Fragment {
                                     jsonObject.getString("accepted"),
                                     jsonObject.getString("timeFinish")
                             ));
-
                         }
+
                         adapter = new ArrayAdapter<Transaccio>(getActivity(), R.layout.list_item, transaccions)
                         {
                             @Override
@@ -129,13 +130,33 @@ public class HistorialFragment extends Fragment {
                         };
                         binding.transactionList.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
-
                 }
-
             }
         } catch (JSONException e) {
             // throw new RuntimeException(e);
         }
+        });
+    }
+    public void popupMessage(String message) {
+        getActivity().runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Transacció");
+            builder.setMessage(message + "!!");
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            // Hide after some seconds
+            final Handler handler  = new Handler();
+            final Runnable runnable = () -> {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            };
+
+            dialog.setOnDismissListener(dialog1 -> handler.removeCallbacks(runnable));
+
+            handler.postDelayed(runnable, 3000);
         });
     }
 
