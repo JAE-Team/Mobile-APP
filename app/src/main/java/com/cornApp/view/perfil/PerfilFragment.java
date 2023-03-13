@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,10 +44,25 @@ import java.util.Base64;
 public class PerfilFragment extends Fragment {
     private PerfilFragmentBinding binding;
     ActivityResultLauncher<Intent> launcher;
+    private Handler handler = new Handler();
+    private Runnable runnable;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = PerfilFragmentBinding.inflate(inflater, container, false);
-
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                // Escribir la línea de código que quieres ejecutar aqui
+                try {
+                    checkStatus();
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                handler.postDelayed(runnable, 5000);
+                // Volver a llamar al mismo Runnable después de 10 segundos
+            }
+        };
+        handler.post(runnable);
         getProfileInfo();
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -97,6 +114,12 @@ public class PerfilFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        handler.removeCallbacks(runnable);
+    }
+
     private void uploadFile (File anversDNI, File reversDNI) {
         try {
             // Read image from File and convert to Base64
@@ -130,7 +153,7 @@ public class PerfilFragment extends Fragment {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("status", objResponse.getString("statusDNI"));
                         editor.commit();
-                        changeStatus(sharedPref.getString("status",""));
+                        changeStatus(sharedPref.getString("status",""),true);
 
                     } else if(objResponse.getString("status").equals("KO")){
                         popupMessage(objResponse.getString("message"));
@@ -180,7 +203,7 @@ public class PerfilFragment extends Fragment {
         binding.telefon.setText(strPhone);
         binding.email.setText(strEmail);
 
-        changeStatus(strStatus);
+        changeStatus(strStatus,true);
     }
 
     public void popupMessage(String message) {
@@ -195,38 +218,74 @@ public class PerfilFragment extends Fragment {
         });
     }
 
-    public void changeStatus(String strStatus){
-        switch (strStatus){
-            case "NOT_VERIFIED":
-                popupMessage("Per verificar l'usuari polsi el botó que está situat al l'esquina superior dreta.");
-                strStatus = "No verificat";
-                binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.teal_200,null));
-                break;
+    public void changeStatus(String strStatus,boolean enableAlert){
+        getActivity().runOnUiThread(new Runnable() {
 
-            case "WAITING_VERIFICATION":
-                strStatus = "Esperant verificació...";
-                binding.dni.setEnabled(false);
-                binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_orange,null));
-                break;
+            @Override
+            public void run() {
+                String status = "";
+                switch (strStatus){
+                    case "NOT_VERIFIED":
+                        if (enableAlert) {
+                            popupMessage("Per verificar l'usuari polsi el botó que está situat al l'esquina superior dreta.");
+                        }
+                        status = "No verificat";
+                        binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.teal_200,null));
+                        break;
 
-            case "ACCEPTED":
-                strStatus = "Acceptat";
-                binding.dni.setEnabled(false);
-                binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_green,null));
-                break;
+                    case "WAITING_VERIFICATION":
+                        status = "Esperant verificació...";
+                        binding.dni.setEnabled(false);
+                        binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_orange,null));
+                        break;
 
-            case "REJECTED":
-                strStatus = "Rebutjat";
-                binding.dni.setEnabled(true);
-                binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_red,null));
-                break;
+                    case "ACCEPTED":
+                        status = "Acceptat";
+                        binding.dni.setEnabled(false);
+                        binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_green,null));
+                        break;
 
-            default:
-                strStatus = "NOT_VERIFIED";
-                binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.teal_200,null));
-                break;
-        }
+                    case "REJECTED":
+                        status = "Rebutjat";
+                        binding.dni.setEnabled(true);
+                        binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.alert_red,null));
+                        break;
 
-        binding.statusText.setText(strStatus);
+                    default:
+                        status = "NOT_VERIFIED";
+                        binding.status.setCardBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.teal_200,null));
+                        break;
+                }
+
+                binding.statusText.setText(status);
+                // Stuff that updates the UI
+
+            }
+        });
+
+    }
+    private void checkStatus() throws JSONException {
+        JSONObject obj = new JSONObject("{}");
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
+        String sToken = sharedPref.getString("sessionToken","");
+        obj.put("sessionToken", sToken);
+        obj.put("returnDNI",true);
+        UtilsHTTP.sendPOST(Utils.apiUrl + "/api/get_profile", obj.toString(), (response) -> {
+            try {
+                JSONObject objResponse = new JSONObject(response);
+
+                if (objResponse.getString("status").equals("OK")) {
+                    JSONArray dataServer = objResponse.getJSONArray("message");
+                    JSONObject userData = dataServer.getJSONObject(0);
+                    Log.d("status",userData.getString("verificationStatus"));
+
+                    changeStatus(userData.getString("verificationStatus"),false);
+                }
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+
+            }
+        });
     }
 }
