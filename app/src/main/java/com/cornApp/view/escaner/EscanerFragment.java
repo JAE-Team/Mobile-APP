@@ -46,7 +46,6 @@ public class EscanerFragment extends Fragment {
             try {
                 onPause();
                 if(result.getText().contains("P")){
-                    // Guardar el token de cobrament
                     SharedPreferences sharedPayments = getActivity().getSharedPreferences("payments",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPayments.edit();
                     editor.putString("paymentToken", result.getText());
@@ -56,7 +55,7 @@ public class EscanerFragment extends Fragment {
                     SharedPreferences sharedUser = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
 
                     JSONObject obj = new JSONObject("{}");
-                    obj.put("user_id", sharedUser.getString("phone", ""));
+                    obj.put("sourceUToken", sharedUser.getString("sessionToken", ""));
                     obj.put("transaction_token",sharedPayments.getString("paymentToken",""));
 
                     UtilsHTTP.sendPOST(Utils.apiUrl + "/api/start_payment", obj.toString(), (response) -> {
@@ -133,7 +132,7 @@ public class EscanerFragment extends Fragment {
             SharedPreferences sharedPayments = getActivity().getSharedPreferences("payments",Context.MODE_PRIVATE);
             SharedPreferences sharedUser = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
 
-            obj.put("user_id", sharedUser.getString("phone",""));
+            obj.put("sourceUToken", sharedUser.getString("sessionToken",""));
             obj.put("transaction_token", sharedPayments.getString("paymentToken",""));
             obj.put("accept", accepted);
             obj.put("amount", amount);

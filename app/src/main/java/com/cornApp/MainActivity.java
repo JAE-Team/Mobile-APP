@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences sharedPref = this.getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
             String sToken = sharedPref.getString("sessionToken","");
             obj.put("sessionToken", sToken);
+            obj.put("returnDNI",false);
 
             Log.d("token",sToken);
 

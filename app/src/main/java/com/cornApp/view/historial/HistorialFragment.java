@@ -64,6 +64,7 @@ public class HistorialFragment extends Fragment {
             SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
             String sToken = sharedPref.getString("sessionToken","");
             obj.put("sessionToken", sToken);
+            obj.put("returnDNI",false);
 
             UtilsHTTP.sendPOST(Utils.apiUrl + "/api/get_profile", obj.toString(), (response) -> {
                 getActivity().runOnUiThread(() -> {

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
@@ -28,6 +29,7 @@ import com.cornApp.utils.FileUtil;
 import com.cornApp.utils.Utils;
 import com.cornApp.utils.UtilsHTTP;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -69,7 +71,6 @@ public class PerfilFragment extends Fragment {
 
         binding.dni.setOnClickListener(v -> {
             startGallery();
-
         });
 
         binding.logout.setOnClickListener(v -> {
@@ -97,7 +98,6 @@ public class PerfilFragment extends Fragment {
     }
 
     private void uploadFile (File anversDNI, File reversDNI) {
-
         try {
             // Read image from File and convert to Base64
             byte[] anvers = new byte[0];
@@ -130,7 +130,7 @@ public class PerfilFragment extends Fragment {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("status", objResponse.getString("statusDNI"));
                         editor.commit();
-                        changeStatus();
+                        changeStatus(sharedPref.getString("status",""));
 
                     } else if(objResponse.getString("status").equals("KO")){
                         popupMessage(objResponse.getString("message"));
@@ -173,13 +173,14 @@ public class PerfilFragment extends Fragment {
         String strSurname = sharedPref.getString("surname", "");
         String strPhone = sharedPref.getString("phone", "");
         String strEmail = sharedPref.getString("email", "");
+        String strStatus = sharedPref.getString("status", "");
 
         binding.nom.setText(strName);
         binding.cognoms.setText(strSurname);
         binding.telefon.setText(strPhone);
         binding.email.setText(strEmail);
 
-        changeStatus();
+        changeStatus(strStatus);
     }
 
     public void popupMessage(String message) {
@@ -194,10 +195,7 @@ public class PerfilFragment extends Fragment {
         });
     }
 
-    public void changeStatus(){
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
-        String strStatus = sharedPref.getString("status", "");
-
+    public void changeStatus(String strStatus){
         switch (strStatus){
             case "NOT_VERIFIED":
                 popupMessage("Per verificar l'usuari polsi el botó que está situat al l'esquina superior dreta.");
