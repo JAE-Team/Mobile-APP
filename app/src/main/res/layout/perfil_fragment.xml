@@ -33,12 +33,12 @@
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
                 android:layout_marginBottom="17dp"
-                android:tint="#486279"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.642"
-                app:srcCompat="@drawable/id_card" />
+                app:srcCompat="@drawable/id_card"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/labelNom"
@@ -116,7 +116,6 @@
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
                 android:layout_marginBottom="17dp"
-                android:tint="#486279"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -176,7 +175,6 @@
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
                 android:layout_marginBottom="17dp"
-                android:tint="#486279"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -236,7 +234,6 @@
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
                 android:layout_marginBottom="17dp"
-                android:tint="#486279"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -250,15 +247,14 @@
         android:id="@+id/logo_user"
         android:layout_width="200dp"
         android:layout_height="201dp"
-        android:layout_marginStart="125dp"
         android:layout_marginTop="62dp"
-        android:layout_marginEnd="126dp"
         android:layout_marginBottom="31dp"
         app:layout_constraintBottom_toTopOf="@+id/profile_user_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/user" />
+        app:srcCompat="@drawable/user"
+        tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/logout"
@@ -267,9 +263,79 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:clickable="true"
-        app:backgroundTint="@color/deep_green"
+        app:backgroundTint="@color/pink_red"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/log_out" />
+        app:srcCompat="@drawable/log_out"
+        tools:ignore="ImageContrastCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/dni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="222dp"
+        android:clickable="true"
+        app:backgroundTint="@color/pink_red"
+        app:layout_constraintBottom_toTopOf="@+id/profile_user_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/logo_user"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/dni" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/statusUser"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="31dp"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_email">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/status"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="@color/teal_200"
+                app:cardCornerRadius="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="88dp"
+                android:layout_marginBottom="15dp"
+                android:text="Estat del compte"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/status"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

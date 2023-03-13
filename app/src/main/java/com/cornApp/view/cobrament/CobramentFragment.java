@@ -41,7 +41,7 @@ public class CobramentFragment extends Fragment {
 
                     JSONObject obj = new JSONObject("{}");
                     obj.put("amount",binding.cantidadCobro.getText().toString());
-                    obj.put("user_id",sharedPref.getString("phone", ""));
+                    obj.put("destUToken",sharedPref.getString("sessionToken", ""));
 
                     UtilsHTTP.sendPOST(Utils.apiUrl + "/api/setup_payment", obj.toString(), (response) -> {
                         try {
@@ -77,7 +77,6 @@ public class CobramentFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
 
-            // Hide after some seconds
             final Handler handler  = new Handler();
             final Runnable runnable = () -> {
                 if (dialog.isShowing()) {
