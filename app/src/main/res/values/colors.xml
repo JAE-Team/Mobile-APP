@@ -10,4 +10,9 @@
     <color name="profileEditTextColor">#707070</color>
     <color name="beige">#f4eeed</color>
     <color name="deep_green">#486279</color>
+    <color name="pink_red">#fb7d8b</color>
+    <color name="alert_orange">#FF8C00</color>
+    <color name="alert_red">#FF2929</color>
+    <color name="alert_green">#08FF00</color>#0d2640
+    <color name="deep_blue">#0d2640</color>
 </resources>

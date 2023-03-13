@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences sharedPref = this.getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
             String sToken = sharedPref.getString("sessionToken","");
             obj.put("sessionToken", sToken);
+            obj.put("returnDNI",false);
 
             Log.d("token",sToken);
 
@@ -55,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
                         sendDataToFragment(userData.getString("userName"),
                                 userData.getString("userSurname"),
                                 userData.getString("userId"),
-                                userData.getString("userEmail"));
+                                userData.getString("userEmail"),
+                                userData.getString("verificationStatus"),
+                                userData.getString("userBalance")
+                                );
 
                         this.runOnUiThread(() -> {
                             setContentView(binding.getRoot());
@@ -100,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
 
-            // Hide after some seconds
             final Handler handler  = new Handler();
             final Runnable runnable = () -> {
                 if (dialog.isShowing()) {
@@ -114,13 +117,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void sendDataToFragment(String name, String surname, String phone, String email){
+    public void sendDataToFragment(String name, String surname, String phone, String email, String status, String balance){
         SharedPreferences sharedPref = getSharedPreferences("sessionUser",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("name", name);
         editor.putString("surname", surname);
         editor.putString("phone", phone);
         editor.putString("email", email);
+        editor.putString("balance", balance);
+        editor.putString("status", status);
         editor.commit();
     }
 }
